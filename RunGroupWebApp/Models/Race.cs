@@ -15,8 +15,6 @@ namespace RunGroupWebApp.Models
         public int AddressId { get; set; }
         public Address Address { get; set; }
         public RaceCategory RaceCategory { get; set; }
-        [ForeignKey("AppUser")]
-        public int? AppUserId { get; set; }
         public AppUser AppUser { get; set; }
     }
 }
