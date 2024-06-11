@@ -18,7 +18,7 @@
                 </p>
                 <!-- button -->
                 <div class="d-grid d-md-block">
-                     <a class="btn btn-light mb-2 mb-md-0" asp-area="" asp-controller="Account" asp-action="Register">Join us NOW!</a>
+                    <a class="btn btn-light mb-2 mb-md-0" asp-area="" asp-controller="Account" asp-action="Register">Join us NOW!</a>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
 <!--end of section-->
 <section>
     <div class="container">
-        @if (!User.Identity.IsAuthenticated && Model.Clubs == null)
+        @if (Model.Clubs == null)
         {
             <h1 class="fw-light m-5">
                 There are no running clubs in your area! In @Model.State <a asp-area="" asp-controller="Account" asp-action="Login">Login</a> and create one!
@@ -36,7 +36,7 @@
         }
         else
         {
-            <div class="row justify-content-center mb-5 m-5 bg-light py-5">
+            <div class="row justify-content-center my-5 bg-light py-4">
                 <div class="col-auto">
                     <h3>Running clubs near @Model.City, @Model.State</h3>
                 </div>
@@ -83,7 +83,68 @@
     <!--end of container-->
 </section>
 <section class="container">
+</section>
 
+
+
+<section class="my-5">
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark mb-2">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
+            <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.</p>
+            <a class="btn btn-light">Continue reading</a>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-2 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-primary">Runner's Life</strong>
+                    <h3 class="mb-0">
+                        <p class="text-dark">Runner Diet</p>
+                    </h3>
+                    <div class="mb-1 text-muted">Nov 12</div>
+                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                    <a class="btn btn-success">Continue reading</a>
+                </div>
+                <img class="card-img-right flex-auto d-none d-md-block" height="250" width="200" src="https://images.pexels.com/photos/25792980/pexels-photo-25792980/free-photo-of-slonce-budynek-architektura-podroz.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-success">Advices</strong>
+                    <h3 class="mb-0">
+                        <p class="text-dark">Best running places</p>
+                    </h3>
+                    <div class="mb-1 text-muted">Nov 11</div>
+                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                    <a class="btn btn-success">Continue reading</a>
+                </div>
+                <img class="card-img-right flex-auto d-none d-md-block" height="250" width="200" src="https://images.pexels.com/photos/25792980/pexels-photo-25792980/free-photo-of-slonce-budynek-architektura-podroz.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Card image cap">
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container text-center bg-white py-5 my-5">
+    <h1>About Us</h1>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+    </p>
+    <p>
+        Fugit dolorum itaque qui unde quisquam consequatur autem.
+    </p>
+    <p>
+        Eveniet quasi nobis aliquid cumque officiis sed rem iure ipsa! Praesentium ratione atque dolorem?
+    </p>
+    <div>
+        <h1 class="px-2 fa-brands fa-twitter"></h1>
+        <h1 class="px-2 fa-brands fa-linkedin"></h1>
+        <h1 class="px-2 fa-brands fa-github"></h1>
+    </div>
 </section>
 
 @*
