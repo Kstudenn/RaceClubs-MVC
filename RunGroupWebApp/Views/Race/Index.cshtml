@@ -1,5 +1,17 @@
 ﻿@model IEnumerable<Race>
 
+<div class="py-5 bg-light c2a1" style="background-image:url(https://images.pexels.com/photos/163444/sport-treadmill-tor-route-163444.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);background-repeat: no-repeat; background-position: center">
+    <div class="container">
+        <!-- Row -->
+        <div class="row justify-content-center">
+            <div class="col-md-7 text-center">
+                <h1 class="mb-3 text-white font-weight-medium" style=" text-shadow: 2px 2px black; background-color=">Find a race!!</h1>
+            </div>
+        </div>
+        <!-- Row -->
+    </div>
+</div>
+
 <div class="album py-5 bg-light">
     <div class="container">
 
@@ -8,7 +20,7 @@
             {
                 <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="@item.Image" width="100%" height="225" alt="Card image cap">
+                        <img class="card-img-top" src="@item.Image" alt="Card image cap" width="406px" height="406px" alt="Card image cap" style="object-fit: cover;">
                         <div class="card-body">
                             <p class="card-text">@item.Title</p>
                             <p class="card-text">@item.Description</p>
@@ -16,15 +28,19 @@
                                 <div class="btn-group">
                                     <a type="btn btn-success" asp-controller="Race" asp-action="Detail" asp-route-id="@item.Id"
                                        class="btn btn-sm btn-outline-secondary">View</a>
-                                    <a type="btn btn-success" asp-controller="Race" asp-action="Edit" asp-route-id="@item.Id"
-                                       class="btn btn-sm btn-outline-secondary">Edit</a>
-                                    <a type="btn btn-success" asp-controller="Race" asp-action="Delete" asp-route-id="@item.Id"
-                                       class="btn btn-sm btn-outline-secondary">Delete</a>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                    {
+                                        <a type="btn btn-success" asp-controller="Race" asp-action="Edit" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-secondary">Edit</a>
+                                        <a type="btn btn-success" asp-controller="Race" asp-action="Delete" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-secondary">Delete</a>
+                                    }
                                 </div>
                                 <small class="text-muted">@item.RaceCategory</small>
                             </div>
                         </div>
                     </div>
+
                 </div>
             }
         </div>

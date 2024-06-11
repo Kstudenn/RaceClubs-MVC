@@ -14,11 +14,13 @@ namespace RunGroupWebApp.Controllers
     {
         private readonly IPhotoService _photoService;
         private readonly IRaceRepository _raceRepository;
+        private readonly IHttpContextAccessor _httpContexAccessor;
 
-        public RaceController(IRaceRepository raceRepository, IPhotoService photoService)
+        public RaceController(IRaceRepository raceRepository, IPhotoService photoService, IHttpContextAccessor httpContextAccesor)
         {
             _photoService = photoService;
             _raceRepository = raceRepository;
+            _httpContexAccessor = httpContextAccesor;
         }
         public async Task<IActionResult> Index()
         {
@@ -33,7 +35,9 @@ namespace RunGroupWebApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var currentUserId = _httpContexAccessor.HttpContext?.User.GetUserId();
+            var createRaceViewModel = new CreateRaceViewModel { AppUserId = currentUserId };
+            return View(createRaceViewModel);
         }
 
         [HttpPost]
@@ -48,6 +52,7 @@ namespace RunGroupWebApp.Controllers
                     Title = raceVM.Title,
                     Description = raceVM.Description,
                     Image = result.Url.ToString(),
+                    AppUserId = raceVM.AppUserId,
                     Address = new Address
                     {
                         Street = raceVM.Address.Street,
@@ -68,18 +73,18 @@ namespace RunGroupWebApp.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var race = _raceRepository.GetByIdAsync(id);
+            var race = await _raceRepository.GetByIdAsync(id);
             if (race == null)
                 return View("Error");
             //Automapper lub to
             var raceVM = new EditRaceViewModel
             {
-                Title = race.Result.Title,
-                Description = race.Result.Description,
-                Address = race.Result.Address,
-                AddressId = race.Result.AddressId,
-                URL = race.Result.Image,
-                RaceCategory = race.Result.RaceCategory
+                Title = race.Title,
+                Description = race.Description,
+                Address = race.Address,
+                AddressId = race.AddressId,
+                URL = race.Image,
+                RaceCategory = race.RaceCategory
             };
             return View(raceVM);
 

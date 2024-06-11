@@ -12,11 +12,13 @@ namespace RunGroupWebApp.Controllers
     {
         private readonly IPhotoService _photoService;
         private readonly IClubRepository _clubRepository;
+        private readonly IHttpContextAccessor _httpContexAccessor;
 
-        public ClubController(IClubRepository clubRepository, IPhotoService photoService)
+        public ClubController(IClubRepository clubRepository, IPhotoService photoService, IHttpContextAccessor contextAccessor)
         {
             _photoService = photoService;
             _clubRepository = clubRepository;
+            _httpContexAccessor = contextAccessor;
         }
         public async Task<IActionResult> Index()
         {
@@ -33,7 +35,9 @@ namespace RunGroupWebApp.Controllers
         // Just create page so can be no async
         public IActionResult Create()
         {
-            return View();
+            var currentUserId = _httpContexAccessor.HttpContext?.User.GetUserId();
+            var createClubViewModel = new CreateClubViewModel { AppUserId = currentUserId };
+            return View(createClubViewModel);
         }
 
         [HttpPost]
@@ -48,6 +52,7 @@ namespace RunGroupWebApp.Controllers
                     Title = clubVM.Title,
                     Description = clubVM.Description,
                     Image = result.Url.ToString(),
+                    AppUserId = clubVM.AppUserId,
                     Address = new Address
                     {
                         Street = clubVM.Address.Street,
@@ -67,18 +72,18 @@ namespace RunGroupWebApp.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var club = _clubRepository.GetByIdAsync(id);
+            var club = await _clubRepository.GetByIdAsync(id);
             if (club == null)
                 return View("Error");
             //Automapper lub to
             var clubVM = new EditClubViewModel
             {
-                Title = club.Result.Title,
-                Description = club.Result.Description,
-                Address = club.Result.Address,
-                AddressId = club.Result.AddressId,
-                URL = club.Result.Image,
-                ClubCategory = club.Result.ClubCategory
+                Title = club.Title,
+                Description = club.Description,
+                Address = club.Address,
+                AddressId = club.AddressId,
+                URL = club.Image,
+                ClubCategory = club.ClubCategory
             };
             return View(clubVM);
 

@@ -1,94 +1,104 @@
-﻿<section class="jumbootron text-center">
+﻿@using RunGroupWebApp.ViewModels
+@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="py-lg-16 py-10 bg-gray-200 py-5"
+     style="height: 500px; background: url('https://images.pexels.com/photos/1526790/pexels-photo-1526790.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')no-repeat; background-size: cover; background-position: center">
     <div class="container">
-        <h1 class="jumbotron-heading">Run Groups</h1>
-        <p class="lead text-muted">Something short and leading about collection below</p>
-        <p>
-            <a class="btn btn-primary m-2">Main call to action</a>
-            <a class="btn btn-secondary my-2">Secondary action</a>
-        </p>
-    </div>
-</section>
-
-
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                         preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c" />
-                        <text x="50%" y="50%" fill="#eceeef"
-                              dy=".3em">Thumbnail</text>
-                    </svg>
-                    <div class="card-body">
-                        <p class="card-text">
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-                        </p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                            </div>
-                            <small class="text-body-secondary">9 mins</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                         preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c" />
-                        <text x="50%" y="50%" fill="#eceeef"
-                              dy=".3em">Thumbnail</text>
-                    </svg>
-                    <div class="card-body">
-                        <p class="card-text">
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-                        </p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                            </div>
-                            <small class="text-body-secondary">9 mins</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                         preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c" />
-                        <text x="50%" y="50%" fill="#eceeef"
-                              dy=".3em">Thumbnail</text>
-                    </svg>
-                    <div class="card-body">
-                        <p class="card-text">
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-                        </p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                            </div>
-                            <small class="text-body-secondary">9 mins</small>
-                        </div>
-                    </div>
+        <!-- row -->
+        <div class="d-flex justify-content-center align-items-bottom text-center">
+            <div class="col-md-9 col-12">
+                <!-- heading -->
+                <h2 class="display-4 text-white font-weight-medium font-weight-bold">Join more than 1 million runners worldwide</h2>
+                <p class="lead px-lg-12 mb-6 text-white font-weight-bold">
+                    Effective way of having fun with friends. Take care of your health right now.
+                </p>
+                <!-- button -->
+                <div class="d-grid d-md-block">
+                     <a class="btn btn-light mb-2 mb-md-0" asp-area="" asp-controller="Account" asp-action="Register">Join us NOW!</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!--end of section-->
+<section>
+    <div class="container">
+        @if (!User.Identity.IsAuthenticated && Model.Clubs == null)
+        {
+            <h1 class="fw-light m-5">
+                There are no running clubs in your area! In @Model.State <a asp-area="" asp-controller="Account" asp-action="Login">Login</a> and create one!
+            </h1>
+        }
+        else
+        {
+            <div class="row justify-content-center mb-5 m-5 bg-light py-5">
+                <div class="col-auto">
+                    <h3>Running clubs near @Model.City, @Model.State</h3>
+                </div>
+
+            </div>
+            <ul class="row feature-list feature-list-sm py-5 bg-light" style="list-style-type: none">
+                @foreach (var item in Model.Clubs)
+                {
+                    <li class="col-12 col-md-6 col-lg-4 mb-5">
+                        <div class="card">
+                            <a asp-controller="Club" asp-action="Detail" asp-route-id="@item.Id">
+                                <img class="card-img-top" src="@item.Image" alt="Card image cap">
+                            </a>
+                            <div class="card-body">
+                                <h4 class="card-title">@item.Title</h4>
+                                <p class="card-text text-body">@item.Description</p>
+                            </div>
+                            <div class="card-footer card-footer-borderless d-flex justify-content-between">
+                                <div class="text-small">
+                                    <ul class="list-inline">
+                                        <i class="fa-solid fa-heart"></i>
+                                        <i class="fa-solid fa-message"></i>
+                                    </ul>
+                                </div>
+                                <div class="dropup">
+                                    <a type="btn btn-success" asp-controller="Club" asp-action="Detail" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-secondary">View</a>
+                                    <div class="dropdown-menu dropdown-menu-sm" aria-labelledby="SidekickButton">
+                                        <a class="dropdown-item" href="#">Save</a>
+                                        <a class="dropdown-item" href="#">Share</a>
+                                        <a class="dropdown-item" href="#">Comment</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Report</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+        <!--end of row-->
+    </div>
+    <!--end of container-->
+</section>
+<section class="container">
+
+</section>
+
+@*
+
+<section class="container bg-light p-2 row g-0 text-center">
+    <img class="img-fluid col-sm-6 col-md-8" src="https://images.pexels.com/photos/5611/sky-blue-flag-poland.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+         alt="">
+    <div class="col-6 col-md-4">
+        <h1 class="p-2">
+            Biegamy w Polsce od 12 lat!
+            Organizujemy liczne wspólne zawody,
+            koleżeńską konkurencje.
+        </h1>
+        <div class="d-grid d-md-block">
+            <a class="btn btn-dark mb-2 mb-md-0" asp-area="" asp-controller="Account" asp-action="Register">Join us today!</a>
+        </div>
+    </div>
+</section>*@

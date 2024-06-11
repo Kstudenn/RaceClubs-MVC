@@ -1,0 +1,52 @@
+﻿@using RunGroupWebApp.ViewModels
+@model List<UserViewModel>
+
+<div class="py-5 bg-light c2a1" style="background-image:url(https://images.pexels.com/photos/2402738/pexels-photo-2402738.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);background-repeat: no-repeat; background-position: center">
+    <div class="container">
+        <!-- Row -->
+        <div class="row justify-content-center">
+            <div class="col-md-7 text-center">
+                <h1 class="mb-3 text-white font-weight-medium" style=" text-shadow: 2px 2px black; background-color=">Our Users</h1>
+            </div>
+        </div>
+        <!-- Row -->
+    </div>
+</div>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 bo-shadow ">
+                        @if(item.ProfileImageUrl!=null)
+                        {
+                            <img class="card-img-top" src="@item.ProfileImageUrl" width="100%" height="auto" alt="Card image cap">
+                        }
+                        else
+                        {
+                            <img class="card-img-top ratio ratio-4x3" src="https://images.pexels.com/photos/54326/runners-male-sport-run-54326.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" width="406px" height="406px" alt="Card image cap" style="object-fit: cover;">
+                        }
+                        @*<img class="card-img-top" src="@item.ProfileImageUrl" width="100%" height="auto" alt="Card image cap">*@
+                        <div class="card-body">
+                            <p class="card-text">@item.UserName</p>
+                            <p class="card-text">Mileage: @item.Mileage</p>
+                            <p class="card-text">Pace: @item.Pace</p>
+                            <div class="d-flex justify-content-between align-items-md-center">
+                                <div class="btn-group">
+                                    <a type="btn btn-succes" asp-controller="User" asp-action="Detail" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-secondary">View</a>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                    {
+                                        <a asp-controller="Club" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                        @*<a asp-controller="Club" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Delete</a>*@
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
